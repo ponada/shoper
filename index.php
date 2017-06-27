@@ -11,17 +11,9 @@
     <body>
 
     <?php
-        $category = new Category(1, 'Product');
+        $db = DBManager::getDB();
+        $db->getAllData(users);
 
-        /*
-        $category->setName('Продукт');
-        echo $category->getName();
-        echo $category->getSlug();
-        */
-
-        $animalProduct = new AnimalProduct(1, 'toy', 'for cat', 'img', '5$', 'exist', 1,  5);
-
-        echo $animalProduct->getName();
 
 
 

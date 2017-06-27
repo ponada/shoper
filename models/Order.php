@@ -90,6 +90,12 @@ class Order
         return $this->userPhone;
     }
 
-
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 
 }
