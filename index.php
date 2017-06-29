@@ -11,8 +11,11 @@
     <body>
 
     <?php
-        $db = DBManager::getDB();
-        $db->getAllData(users);
+
+        $routing = new Rout();
+        $routing->resp();
+
+
 
 
 

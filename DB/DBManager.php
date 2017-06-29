@@ -38,18 +38,21 @@ class DBManager
         return self::$db;
     }
 
-    public function getAllData($tableName) {
+    public function getAllData($tableName){
         $sql = "SELECT * FROM $tableName";
         $result = $this->connection->query($sql);
         $array = array();
-        while($row = $result->fetch_assoc()) {
-            foreach ($row as $key=>$value) {
-                echo $key . ':' . $row[$key] . ' ';
-            }
-            echo "<br>";
-            /*echo "age = ". $row["age"]." name = ". $row["name"]."<br>"; */
+        while($row = $result->fetch_assoc()){
+            $array[] = $row;
         }
         return $array;
+    }
+
+    public function getFieldById($tableName, $id){
+        $id = (int)$id;
+        $sql = "SELECT * FROM $tableName WHERE id = $id LIMIT 1";
+        $result = $this->connection->query($sql);
+        return $result->fetch_assoc();
     }
 
 }
