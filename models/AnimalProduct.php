@@ -11,9 +11,9 @@ class AnimalProduct extends Product
     private $categoryId;
     private $rating;
 
-    public function __construct($id, $name, $description, $icon, $price, $exist, $categoryId, $rating)
+    public function __construct($id, $name, $description, $icons, $price, $exists, $slug, $categoryId, $rating)
     {
-        parent::__construct($id, $name, $description, $icon, $price, $exist);
+        parent::__construct($id, $name, $description, $icons, $price, $exists, $slug);
         $this->categoryId = $categoryId;
         $this->rating = $rating;
     }

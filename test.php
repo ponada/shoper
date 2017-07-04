@@ -8,6 +8,7 @@
 
     require_once "DB/DBManager.php";
 
+    require_once "Entity/ProductRelation.php";
     require_once "Entity/CategoriesRelation.php";
     require_once "Rout.php";
 
@@ -18,4 +19,6 @@
     require_once "Controllers/MainController.php";
     require_once "Controllers/CategoriesController.php";
     require_once "Controllers/ProductController.php";
+
+    require_once "API.php";
 ?>

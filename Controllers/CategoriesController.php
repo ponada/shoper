@@ -9,19 +9,30 @@
 class CategoriesController implements IController
 {
     private $slug;
-
-    public function __construct($slug)
+    private $page;
+    public function __construct($slug, $page)
     {
         $this->slug = $slug;
+        if (isset($_GET['page'])){
+            $this->page = $page;
+        }
     }
+    public function response()
+    {
+        $categoryRelation = new CategoriesRelation();
+        $category = $categoryRelation->getCategoryBySlug($this->slug);
+        if (!isset($category)) {
+            print "Error";
+            return;
+        }
 
-    public function response() {
-        $relation = new CategoriesRelation();
-        $categories = $relation->getAllCategories();
+        $productRelation = new ProductRelation();
+        $categories = $categoryRelation->getAllCategories();
+        $products = $productRelation->getAllProductsByCategorySlug($this->slug);
 
         include_once 'Views/header.php';
-        include_once 'Views/categories.php';
+        include_once "Views/category.php";
         include_once 'Views/footer.php';
-
     }
+
 }

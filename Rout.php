@@ -11,43 +11,57 @@ class Rout
     const INDEX = '';
     const BASKET = 'basket';
     const CONTACTS = 'contacts';
-
+    const CATEGORY = 'category';
+    const PRODUCT = 'product';
     private $controller;
-
     public function __construct()
     {
-        $params = explode('/', $_SERVER["REQUEST_URI"]);
-        if (!empty($params[3])) {
+        $params = explode('/',$_SERVER["REQUEST_URI"]);
+        if (!empty($params[3])){
             $this->controller = new Error404Controller();
             return;
         }
-
-        switch ($params[1]) {
-            case self::INDEX:
+        switch ($params[1]){
+            case self::INDEX :
                 $this->controller = new MainController();
                 break;
-            case self::BASKET:
+            case self::BASKET :
                 $this->controller = new BasketController();
                 break;
-            case self::CONTACTS:
+            case self::CONTACTS :
                 $this->controller = new ContactsController();
                 break;
-            default:
-                if (!Utils::regExpOnlyLettersAndNumbers($params[1]) or (!Utils::regExpOnlyLettersAndNumbers($params[2]) and !empty($params[2]))) {
+            case self::CATEGORY :
+                if (!empty($params[2]) and !Utils::regExpOnlyLettersAndNumbers($params[2])){
                     $this->controller = new Error404Controller();
                     break;
                 }
-
-                if(empty($params[2])) {
-                    $this->controller = new CategoriesController($params[2]);
-                } else {
-                    $this->controller = new ProductController($params[1], $params[2]);
+                $page = isset($params[3]) ? (int)$params[3] : null;
+                $this->controller = new CategoriesController($params[2], $page);
+                break;
+            case self::PRODUCT :
+                if (!empty($params[2]) and !Utils::regExpOnlyLettersAndNumbers($params[2])){
+                    $this->controller = new Error404Controller();
+                    break;
                 }
+                $this->controller = new ProductController($params[2]);
+                break;
+            default:
+                $this->controller = new Error404Controller();
                 break;
         }
     }
 
-    public function resp() {
-        $this->controller->response();
+    public function resp()
+    {
+        if ($this->controller){
+            $this->controller->response();
+        }else{
+            echo "Error server";
+        }
+    }
+
+    public static function base_url(){
+        return 'http://'.$_SERVER["SERVER_NAME"].'/';
     }
 }
